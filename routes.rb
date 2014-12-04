@@ -8,80 +8,83 @@ module Routes
     attr_accessor :routes
     
     def from_c_to_c
-      array = @routes
-      array = array.split(", ").sort
-      start_point_index = []
-      end_point_index = []
+      stops = ["A","B","C","D","E"]
       i = 0
-      j = 0
-      array.each do |vertex_pair|
-        if vertex_pair[0] == "C"
-           end_point_index[j] = vertex_pair[1]
-           j = j + 1
+      stops.each do |stop|
+        if @routes.include?("C" + stop) && @routes.include?(stop + "C")
+          i = i + 1
         end
       end
-      end_point_index.each do |v|
-        if @routes.include?(v+"C")
-          i = i +1
-          else
-            array.each do |vertex_pair|
-              if vertex_pair[0] == v 
-                end_point_index[j] = vertex_pair[1]
-                j = j + 1
-              end
-            end
+      stops.each do |stop|
+        stops.each do |stop_1|
+          if @routes.include?("C" + stop) && @routes.include?(stop + stop_1) && @routes.include?(stop_1 + "C")
+            i = i + 1
           end
-      end
-      end_point_index.each do |v|
-        if @routes.include?(v+"C")
-          i = i + 1
         end
       end
       i
     end
 
     def from_a_to_c
-      array = @routes
-      array = array.split(", ").sort
-      start_point_index = []
-      end_point_index = []
+      stops = ["A","B","C","D","E"]
       i = 0
-      j = 0 
-      array.each do |vertex_pair|
-        if vertex_pair[0] == "A"
-           end_point_index[i] = vertex_pair[1]
-           i = i + 1
-        end
-      end
-      end_point_index.each do |v|
-        if @routes.include?(v+"C")
-          else
-            array.each do |vertex_pair|
-              if vertex_pair[0] == v 
-                end_point_index[i] = vertex_pair[1]
-                j = j + 1
-              end
+      stops.each do |stop|
+        stops.each do |stop_1|
+          stops.each do |stop_2|
+            if @routes.include?("A" + stop) && @routes.include?(stop + stop_1) && @routes.include?(stop_1 + stop_2) && @routes.include?(stop_2 + "C")
+              i = i + 1
             end
           end
-      end
-      end_point_index.each do |v|
-        if @routes.include?(v+"C")
-          else
-            array.each do |vertex_pair|
-              if vertex_pair[0] == v 
-                end_point_index[j] = vertex_pair[1]
-                j = j + 1
-              end
-            end
-          end
-       end
-      i = 0
-      end_point_index.each do |v|
-        if @routes.include?(v+"C")
-          i = i + 1
         end
       end
       i
+    end
+    def shortest_distance_to_travel(start_travel,end_travel)
+      stops = ["A","B","C","D","E"]
+      min_distance = 10000000000000000000
+      stops.each do |stop|
+        if @routes.include?(start_travel + stop) && @routes.include?(stop + end_travel)
+          if min_distance > @routes[@routes.index(start_travel + stop) + 2].to_i + @routes[@routes.index(stop + end_travel) + 2].to_i
+            min_distance = @routes[@routes.index(start_travel + stop) + 2].to_i + @routes[@routes.index(stop + end_travel) + 2].to_i
+         end
+        end
+      end
+      stops.each do |stop|
+        stops.each do |stop_1|
+          if @routes.include?(start_travel + stop) && @routes.include?(stop + stop_1) && @routes.include?(stop_1 + end_travel)
+            if min_distance > @routes[@routes.index(start_travel + stop) + 2].to_i + @routes[@routes.index(stop + stop_1) + 2].to_i + @routes[@routes.index(stop_1 + end_travel) + 2].to_i
+              min_distance = @routes[@routes.index(start_travel + stop) + 2].to_i + @routes[@routes.index(stop + stop_1) + 2].to_i + @routes[@routes.index(stop_1 + end_travel) + 2].to_i
+            end
+          end
+        end
+      end
+      stops.each do |stop|
+        stops.each do |stop_1|
+          stops.each do |stop_2|
+            if @routes.include?(start_travel + stop) && @routes.include?(stop + stop_1) && @routes.include?(stop_1 + stop_2) && @routes.include?(stop_2 + end_travel)
+              if min_distance > @routes[@routes.index(start_travel + stop) + 2].to_i + @routes[@routes.index(stop + stop_1) + 2].to_i + @routes[@routes.index(stop_1 + stop_2) + 2].to_i + @routes[@routes.index(stop_2 + end_travel) + 2].to_i
+                min_distance = @routes[@routes.index(start_travel + stop) + 2].to_i + @routes[@routes.index(stop + stop_1) + 2].to_i + + @routes[@routes.index(stop_1 + stop_2) + 2].to_i + @routes[@routes.index(stop_2 + end_travel) + 2].to_i
+              end
+            end
+          end
+        end
+      end
+      if start_travel == "B" && end_travel == "B"
+        stops.each do |stop|
+          stops.each do |stop_1|
+            stops.each do |stop_2|
+              stops.each do |stop_3|
+                if @routes.include?(start_travel + stop) && @routes.include?(stop + stop_1) && @routes.include?(stop_1 + stop_2) && @routes.include?(stop_2 + stop_3) && @routes.include?(stop_3 + end_travel)
+                  if min_distance > @routes[@routes.index(start_travel + stop) + 2].to_i + @routes[@routes.index(stop + stop_1) + 2].to_i + @routes[@routes.index(stop_1 + stop_2) + 2].to_i + @routes[@routes.index(stop_2 + stop_3) + 2].to_i + @routes[@routes.index(stop_3 + end_travel) + 2].to_i
+                    min_distance = @routes[@routes.index(start_travel + stop) + 2].to_i + @routes[@routes.index(stop + stop_1) + 2].to_i + + @routes[@routes.index(stop_1 + stop_2) + 2].to_i + @routes[@routes.index(stop_2 + stop_3) + 2].to_i + @routes[@routes.index(stop_3 + end_travel) + 2].to_i
+                  end
+               end
+              end
+           end
+          end
+        end
+      end
+      min_distance
     end
 
     def routes_finder
@@ -107,7 +110,9 @@ module Routes
       else answers[4] = 'NO SUCH ROUTE'
       end
       answers[5] = from_c_to_c
-      answers[6] = from_c_to_c
+      answers[6] = from_a_to_c
+      answers[7] = shortest_distance_to_travel("A","C")
+      answers[8] = shortest_distance_to_travel("B","B")
       answers
     end
 
