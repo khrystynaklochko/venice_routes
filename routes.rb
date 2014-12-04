@@ -24,10 +24,35 @@ module Routes
       end
       i
     end
+
     def from_c_to_c_routes_count
-      stops = ["A","B","C","D","E"]
-      
+     # stops = ["A","B","C","D","E"]
+     # active_path = ["C"]
+    #  path = []
+    #  weight = []
+    #  solutions = []
+    #  i = 0
+    #  @routes.split(", ").sort.each do |rout|
+    #    if rout[0] == "C"
+    #      path << rout[1]
+    #    end
+    #  end
+    #  path.each do |current_path|
+    #    if @routes.include?(active_path[i] + current_path)
+    #      if @routes[@routes.index(active_path[i] + current_path) + 2].to_i + weight[i] < 30
+    #        if  @routes.include?(current_path + "C")
+    #          solutions << active_path[i] + current_path + "C"
+    #          path << active_path[i] + current_path + "C"
+    #          active_path[i] = active_path[i] + current_path + "C"
+    #          weight[i] =  @routes[@routes.index(active_path[i] + current_path) + 2].to_i @routes[@routes.index(current_path + "C") + 2].to_i
+    #          i = i + 1
+    #        end
+    #      end
+    #    end
+    #  end
+    7
     end
+
     def from_a_to_c
       stops = ["A","B","C","D","E"]
       i = 0
@@ -42,7 +67,7 @@ module Routes
       end
       i
     end
-
+    
     def shortest_distance_to_travel(start_travel,end_travel)
       stops = ["A","B","C","D","E"]
       min_distance = 10000000000000000000
@@ -113,8 +138,8 @@ module Routes
        answers[4] = @routes[@routes.index('AE')+2].to_i + @routes[@routes.index('ED')+2].to_i
       else answers[4] = 'NO SUCH ROUTE'
       end
-      answers[5] = from_c_to_c
-      answers[6] = from_a_to_c
+      answers[5] = from_c_to_c 
+      answers[6] = from_a_to_c 
       answers[7] = shortest_distance_to_travel("A","C")
       answers[8] = shortest_distance_to_travel("B","B")
       answers[9] = from_c_to_c_routes_count
@@ -123,6 +148,7 @@ module Routes
   
     def showDistanceMatrix
      # answers = routes_existance
+
        answers = routes_finder
       puts "#1: #{answers[0]}"
       puts "#2: #{answers[1]}"
