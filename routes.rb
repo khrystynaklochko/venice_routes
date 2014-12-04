@@ -24,7 +24,10 @@ module Routes
       end
       i
     end
-
+    def from_c_to_c_routes_count
+      stops = ["A","B","C","D","E"]
+      
+    end
     def from_a_to_c
       stops = ["A","B","C","D","E"]
       i = 0
@@ -39,6 +42,7 @@ module Routes
       end
       i
     end
+
     def shortest_distance_to_travel(start_travel,end_travel)
       stops = ["A","B","C","D","E"]
       min_distance = 10000000000000000000
@@ -113,9 +117,10 @@ module Routes
       answers[6] = from_a_to_c
       answers[7] = shortest_distance_to_travel("A","C")
       answers[8] = shortest_distance_to_travel("B","B")
+      answers[9] = from_c_to_c_routes_count
       answers
     end
-
+  
     def showDistanceMatrix
      # answers = routes_existance
        answers = routes_finder
@@ -128,7 +133,7 @@ module Routes
       puts "#7: #{answers[6]}"
       puts "#8: #{answers[7]}"
       puts "#9: #{answers[8]}"
-      puts "#10: #{answers[10]}"
+      puts "#10: #{answers[9]}"
     end
   end
 end
